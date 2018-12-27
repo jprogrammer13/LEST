@@ -1,8 +1,10 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
+#include <image.h>
 
 void display_mode_g(char *s_1, char *s_2, char *s_3, char *s_4, char *s_5, char *s_6, U8G2_SSD1306_128X64_NONAME_F_4W_SW_SPI oled_display);
 void error_mode(char *s_1, char *s_2, char *s_3, U8G2_SSD1306_128X64_NONAME_F_4W_SW_SPI oled_display);
+void startup(U8G2_SSD1306_128X64_NONAME_F_4W_SW_SPI oled_display);
 
 void oled_display_update(char *s_1, char *s_2, char *s_3, char *s_4, char *s_5, char *s_6, int mode, U8G2_SSD1306_128X64_NONAME_F_4W_SW_SPI oled_display)
 {
@@ -14,6 +16,11 @@ void oled_display_update(char *s_1, char *s_2, char *s_3, char *s_4, char *s_5, 
         break;
     case 1:
         error_mode(s_1,s_2,s_3,oled_display);
+        break;
+    case 2:
+        startup(oled_display);
+        break;
+
     }
 }
 
@@ -30,7 +37,7 @@ void display_mode_g(char *s_1, char *s_2, char *s_3, char *s_4, char *s_5, char 
     oled_display.drawUTF8(0, 60, s_6);
 
     oled_display.sendBuffer(); // Mando le operazioni da eseguire sul display
-    delay(100);                //mi fermo 100ms per il refresh
+    delay(500);                //mi fermo 100ms per il refresh
 }
 
 void error_mode(char *s_1, char *s_2, char *s_3, U8G2_SSD1306_128X64_NONAME_F_4W_SW_SPI oled_display){
@@ -49,4 +56,13 @@ void error_mode(char *s_1, char *s_2, char *s_3, U8G2_SSD1306_128X64_NONAME_F_4W
 
     oled_display.sendBuffer(); // Mando le operazioni da eseguire sul display
     delay(500);                //mi fermo 100ms per il refresh
+}
+
+void startup(U8G2_SSD1306_128X64_NONAME_F_4W_SW_SPI oled_display){
+     oled_display.clearBuffer();               //Pulisco il buffer
+    
+    oled_display.drawBitmap(0,0,128/8,64,logo);
+    
+    oled_display.sendBuffer(); // Mando le operazioni da eseguire sul display
+    delay(2000);              
 }

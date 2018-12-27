@@ -45,6 +45,7 @@ HTTPClient http;
 
 void setup()
 {
+
   pinMode(R, OUTPUT); //Red
   pinMode(G, OUTPUT); //Green
   pinMode(B, OUTPUT); //Blue
@@ -52,6 +53,8 @@ void setup()
   Serial.begin(115200); //Inizializzo la seriale
 
   u8g2.begin();
+
+  oled_display_update("", "", "", "", "", "", 2, u8g2);
 
   WiFi.mode(WIFI_AP_STA); //Abilito la possibilità di avere access point e client attivi
 
@@ -169,6 +172,7 @@ void setup()
   {
     //Connessione stabilita
     Serial.println(WiFi.localIP().toString().c_str());
+    oled_display_update("Connesso", "bella", ":P", "", "", "", 0, u8g2);
 
     analogWrite(R, 255);
     analogWrite(G, 0);
