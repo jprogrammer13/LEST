@@ -1,2 +1,2 @@
 # LEST
-Smart Termostater based on ESP8266
+Smart Thermostat based on ESP8266
